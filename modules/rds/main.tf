@@ -1,6 +1,6 @@
 locals {
   ponto_username = "ponto"
-  ponto_database_name = "pronto"
+  ponto_database_name = "ponto"
 
   postgres_version = "16.1"
   postgres_instance_class = "db.t3.micro"
