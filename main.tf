@@ -13,7 +13,6 @@ module "eks" {
   vpc_id = module.vpc.vpc_id
   private_subnets = module.vpc.private_subnets
   public_subnets = module.vpc.public_subnets
-  depends_on = [ module.vpc.vpc_id ]
 }	
 
 module "rds" {
@@ -22,10 +21,21 @@ module "rds" {
   environment = var.environment
   ponto_application_tag_name = var.ponto_application_tag_name
   vpc_id = module.vpc.vpc_id
-  depends_on = [ module.vpc.vpc_id ]
+  vpc_private_subnets = module.vpc.private_subnets
+  depends_on = [ module.vpc.private_subnets ]
 }
 
 module "sqs" {
   source = "./modules/sqs"
   ponto_application_tag_name = var.ponto_application_tag_name
+}
+
+data "aws_eks_cluster" "cluster" {
+  name = module.eks.cluster_name
+  depends_on = [ module.eks.cluster_endpoint ]
+}
+
+data "aws_eks_cluster_auth" "cluster" {
+  name = module.eks.cluster_name
+  depends_on = [ module.eks.cluster_endpoint ]
 }

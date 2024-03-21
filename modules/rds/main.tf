@@ -6,6 +6,12 @@ locals {
   postgres_instance_class = "db.t3.micro"
 }
 
+resource "aws_db_subnet_group" "subnet_group" {
+  name       = "${var.ponto_application_tag_name}-subnet-group"
+  subnet_ids = var.vpc_private_subnets
+}
+
+
 #Create a security group for RDS Database Instances
 resource "aws_security_group" "rds_sg" {
   name = "rds_sg"
@@ -50,10 +56,12 @@ resource "aws_db_instance" "ponto_db_rds" {
     db_name = local.ponto_database_name
     username = local.ponto_username
     password = random_password.ponto-db-user-password.result
-    vpc_security_group_ids = ["${aws_security_group.rds_sg.id}"]
+    vpc_security_group_ids = [ aws_security_group.rds_sg.id ]
+    db_subnet_group_name = aws_db_subnet_group.subnet_group.name
     publicly_accessible = false
     skip_final_snapshot = true
-    depends_on = [ aws_security_group.rds_sg ]
+
+    depends_on = [ aws_security_group.rds_sg, aws_db_subnet_group.subnet_group ]
 }
 
 # Stores Pagamentos variables into AWS ssm

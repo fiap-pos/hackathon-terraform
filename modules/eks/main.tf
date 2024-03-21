@@ -1,23 +1,9 @@
 data "aws_caller_identity" "current" {}
 
-data "aws_availability_zones" "available" {
-  filter {
-    name   = "opt-in-status"
-    values = ["opt-in-not-required"]
-  }
-}
-
-data "aws_eks_cluster" "cluster" {
-  name = module.eks.cluster_name
-  depends_on = [ module.eks ]
-}
-
 data "aws_eks_cluster_auth" "cluster" {
   name = module.eks.cluster_name
-  depends_on = [ module.eks ]
+  depends_on = [ module.eks.cluster_endpoint ]
 }
-
-
 
 # EKS Cluster
 module "eks" {
@@ -48,7 +34,6 @@ module "eks" {
       max_capacity     = 3
       desired_capacity = 1
     }
-    
   }
 }
 
@@ -65,7 +50,7 @@ module "lb_role" {
       namespace_service_accounts = ["kube-system:aws-load-balancer-controller"]
     }
   }
-  depends_on = [module.eks]
+  depends_on = [ module.eks.cluster_oidc_provider ]
 }
 
 

@@ -38,7 +38,7 @@ variable "vpc_name" {
 
 variable "cluster_name" {
   type = string
-  default = "hackthon-61"
+  default = "hackathon-61"
 }
 
 variable "cluster_instance_type" {
