@@ -24,7 +24,7 @@ variable "default_tag" {
 variable "ponto_application_tag_name" {
   type        = string
   description = "Ponto application tag Name"
-  default = "hackathon-ponto"
+  default = "hackathon-ponto-61"
 }
 
 # --- VPC Variables ----
@@ -38,7 +38,7 @@ variable "vpc_name" {
 
 variable "cluster_name" {
   type = string
-  default = "hackathon-61"
+  default = "hackathon-ponto-61"
 }
 
 variable "cluster_instance_type" {
