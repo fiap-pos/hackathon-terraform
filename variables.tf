@@ -15,7 +15,7 @@ variable "environment" {
 variable "default_tag" {
   type = string
   description = "default tag"
-  default = "hackathon"
+  default = "hacka"
 }
 
 # ---- Ponto Application Variables ----
@@ -24,21 +24,21 @@ variable "default_tag" {
 variable "ponto_application_tag_name" {
   type        = string
   description = "Ponto application tag Name"
-  default = "hackathon-ponto-61"
+  default = "hacka-ponto-61"
 }
 
 # --- VPC Variables ----
 
 variable "vpc_name" {
   type    = string
-  default = "hackathon-61-eks"
+  default = "hacka-61-eks"
 }
 
 # --- EKS variables ----
 
 variable "cluster_name" {
   type = string
-  default = "hackathon-ponto-61"
+  default = "hacka-ponto-61"
 }
 
 variable "cluster_instance_type" {
